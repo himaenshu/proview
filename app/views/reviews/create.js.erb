@@ -1,0 +1,5 @@
+<% if @review.errors.blank? %>
+	window.location.href = '<%=project_url(@review.project_id)%>';
+<% else %>
+	$("#review_form_dialog .container").html("<%= escape_javascript(render 'form', review: @review) %>");
+<% end %>	

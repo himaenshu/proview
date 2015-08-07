@@ -1,0 +1,55 @@
+<div class="page-header">
+  <h3><%=link_to "&laquo; #{@review.project.name} - #{@task.type}".html_safe, project_url(@review.project.id)%></h3>
+  <% if @review %>
+    <span style="float:right; margin-top:-30px;"><b>Reviewed On - <%= @review.reviewed_on %></b></span>
+  <% end %>
+</div>
+
+<div class="background-world" style="background-image: url('<%= image_path('task.png')%>'); background-size: 463px 290px">
+  <% if @task %>
+  <div class="row">
+    <div class="col-xs-7">
+      <table class="table project-details">
+        <tbody>
+          <tr>
+            <td colspan="2">
+              <b>Title:</b>
+              <%= @task.title %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <b>Description:</b>
+              <%= simple_format(@task.description) %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <% if (@task.type == 'Risk') %>
+                <b>Mitigation:</b>
+              <% else %>
+                <b>Implementation:</b>
+              <% end %>
+              <%= simple_format(@task.implementation) %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <b>Owner:</b>
+              <%= @task.owner %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>    
+  </div>
+  <br/>
+  <% end %>
+  <div class="actions">
+    <label>&nbsp;</label>
+    <%= link_to '&laquo; Back'.html_safe, review_url(@task.review_id), :class=>"btn btn-primary" %>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+</div>

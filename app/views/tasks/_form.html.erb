@@ -1,0 +1,51 @@
+<div class="background-world" style="background-image: url('<%= image_path('task.png')%>'); background-size: 463px 290px">
+  <% if @task.errors.any? %>
+    <div id="error">
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(@task) do |f| %>
+      <%= f.hidden_field :review_id %>
+    <%= f.hidden_field :type %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, required: true, class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 6, :maxlength => 1000, required: true, style: "resize:none;", class: "w500" %>
+    </div>
+    <div class="field">
+      <% if (@task.type == 'Risk') %>
+        <%= f.label "Mitigation" %>
+      <% else %>
+        <%= f.label "Implementation" %>
+      <% end %>
+      <%= f.text_area :implementation, rows: 6, :maxlength => 1000, style: "resize:none;", class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :owner %>
+      <%= f.text_field :owner, class: "w500" %>
+    </div>
+    <% unless @task.new_record? %>
+      <div class="field">
+        <%= f.label :status %>
+        <%= f.select :status, Task::STATUS.collect{|s| [s, s] } %>
+      </div>
+    <% end %>  
+    <br/>
+    <div class="actions">
+    	<label>&nbsp;</label>
+      <%= f.submit "Save", :class=> "btn btn-primary"  %>&nbsp;&nbsp;
+      <%= link_to 'Cancel', review_url(@task.review_id), :class=>"btn btn-primary" %>
+    </div>
+  <% end %>  
+  <br/>
+  <br/>
+  <br/>
+</div>  

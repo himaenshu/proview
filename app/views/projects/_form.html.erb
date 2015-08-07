@@ -1,0 +1,52 @@
+<div class="background-world" style="background-image: url('<%= image_path('project.jpg')%>'); background-size: 450px 225px;">
+
+  <% if @project.errors.any? %>
+    <div id="error" class="project-errors">
+      <ul>
+        <% @project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(@project) do |f| %>
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true, class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 4, :maxlength => 1000, style: "resize:none;", class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :references %>
+      <%= f.text_area :references, rows: 4, :maxlength => 1000, style: "resize:none;", class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :technology_stack %>
+      <%= f.text_field :technology_stack, required: true, class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :product_owner %>
+      <%= f.text_field :product_owner, required: true, class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :team %>
+      <%= f.text_field :team, required: true, class: "w500" %>
+    </div>
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, Project::STATUS.collect{|s| [s, s] } %>
+    </div>
+    <br/>
+    <div class="actions">
+    	<label>&nbsp;</label>
+      <%= f.submit "Save", :class=> "btn btn-primary"  %>&nbsp;&nbsp;
+      <%= link_to 'Cancel', projects_url, :class=>"btn btn-primary" %>
+    </div>
+  <% end %>  
+  <br/>
+  <br/>
+  <br/>
+</div>  

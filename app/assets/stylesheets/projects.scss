@@ -1,0 +1,18 @@
+// Place all the styles related to the Projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.project-details tr td {
+	border-top:0px;
+}
+
+div.box {
+	border: 1px solid darkgrey;
+	margin: 10px;
+	padding: 10px;
+}
+
+div.project-errors{  
+  margin-bottom: 30px;
+  padding-left: 129px;
+}

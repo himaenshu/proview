@@ -1,0 +1,40 @@
+<div class="page-header">
+  <h3><span>Projects</span> </h3>
+  <span style="float:right; margin-top:-30px;"><b><%= link_to "+ New Project", new_project_url %></b></span>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <% if @projects.blank? %>
+      <div>No record found!</div>
+    <% else %>
+      <table class="table table-striped datatable" id="projects">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Technology Stack</th>
+            <th>Product Owner</th>
+            <th>Status</th>
+            <th>Risks</th>
+            <th>Recommendations</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @projects.each do |project| %>
+            <tr class="project_<%= project.id %>">
+              <td><%= link_to project.name, project, :only_path => false %></td>
+              <td><%= display_string(project.technology_stack, 30) %></td>
+              <td><%= project.product_owner %></td>
+              <td><%= project.status %></td>
+              <td><span style="color: red"><%= project.open_risks.count %></span> (<%= project.risks.count%>)</td>
+              <td><span style="color: red"><%= project.open_recommendations.count %></span> (<%= project.recommendations.count%>)</td>
+              <td><%= link_to '&nbsp;Edit&nbsp;'.html_safe, edit_project_url(project), :class => "btn btn-xs btn-primary" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @projects %>
+    <% end %>  
+  </div>
+</div>

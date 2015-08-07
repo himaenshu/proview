@@ -1,0 +1,80 @@
+body {
+  padding-top: 60px;
+}
+
+.body-core {
+  min-height: 500px;
+}
+
+a.btn,
+a.btn:link,
+a.btn:hover,
+a.btn:visited {
+  text-decoration: none;
+  color: #fff;
+}
+
+.hiddenResult {
+  display:none;
+}
+
+li {
+  list-style: none;
+}
+
+li > a {
+  color: grey;
+}
+
+.activveFilter {
+  color: black;
+}
+
+.panel-footer {
+  background-color: #222;
+}
+
+.page-header {
+  margin: 10px 0 5px;
+}
+
+.field {
+  padding-top: 5px;
+ 	padding-bottom: 5px;
+}
+
+label { 
+	width:125px; 
+	padding-right:5px; 
+	vertical-align:top;
+}
+
+div.background-world {
+  background-repeat:no-repeat;
+  background-position: right;
+}
+
+div.field_with_errors label{
+  margin-left: -129px;
+}
+
+div.field_with_errors {
+  padding-left: 129px;
+  margin-top: -25px;
+}
+
+div#error {
+  color: red;
+}
+
+div#error ul {
+  margin-left: -40px;
+}
+
+.w400 {
+  width: 400px;
+}
+
+.w500 {
+  width: 500px;
+}

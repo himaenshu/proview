@@ -1,0 +1,124 @@
+<div class="page-header">
+  <h3><%=link_to "&laquo; #{@project.name}".html_safe, project_url(@project.id)%></h3>
+  <span style="float:right; margin-top:-30px;">
+    <b>
+      <% if @review %>
+        Reviewed On - <%= @review.reviewed_on %>
+      <% else %>
+        <%= @project.reviews.count %> Review(s)
+      <% end %>
+    </b>
+  </span>
+</div>
+
+<% if @review and @review.summary %>
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table project-details">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <b>Summary:</b>
+            <%= simple_format(@review.summary) %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>    
+</div>
+<br/>
+<% end %>
+
+<% unless (@review and @review.code_review?) %>
+<div class="box">
+  <div class="page-header">
+    <h4>Risks</h4>
+    <span style="float:right; margin-top:-30px;"><b><%= link_to "+ New Risk", new_review_task_url(@review.id, type: "Risk") if @review %></b></span>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <% if @risks.blank? %>
+        <div>No record found!</div>
+      <% else %>
+        <table class="table table-striped datatable" id="projects">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>status</th>
+              <th>Status Since</th>
+              <th>Owner</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @risks.each do |risk| %>
+              <tr class="risk_<%= risk.id %>">
+                <td><%= link_to risk.title, risk %></td>
+                <td><%= status_label(risk) %></td>
+                <td><%= risk.status_updated_on %></td>
+                <td><%= risk.owner %></td>
+                <td>
+                <%= link_to 'Edit'.html_safe, edit_risk_url(risk), :class => "btn btn-xs btn-primary" %>
+                <%#= link_to toggle_status_label(risk.status), update_status_task_url(risk, status: toggle_status_value(risk.status)), :class => "btn btn-xs btn-primary" %>
+                <!--&nbsp;&nbsp;<%#= link_to 'Destroy', risk, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-xs btn-primary" %>-->
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+        
+    </div>
+  </div>
+</div>
+<br/>
+<% end %>
+
+<div class="box">
+  <div class="page-header">
+    <h4>Recommendations</h4>
+    <span style="float:right; margin-top:-30px;"><b><%= link_to "+ New Recommendation", new_review_task_url(@review.id, type: "Recommendation") if @review %></b></span>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <% if @recommendations.blank? %>
+        <div>No record found!</div>
+      <% else %>
+        <table class="table table-striped datatable" id="projects">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>status</th>
+              <th>Status Since</th>
+              <th>Owner</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @recommendations.each do |recommendation| %>
+              <tr class="recommendation_<%= recommendation.id %>">
+                <td><%= link_to recommendation.title, recommendation %></td>
+                <td><%= status_label(recommendation) %></td>
+                <td><%= recommendation.status_updated_on %></td>
+                <td><%= recommendation.owner %></td>
+                <td>
+                <%= link_to 'Edit'.html_safe, edit_task_url(recommendation), :class => "btn btn-xs btn-primary" %>
+                <%#= link_to toggle_status_label(recommendation.status), update_status_task_url(recommendation, status: toggle_status_value(recommendation.status)), :class => "btn btn-xs btn-primary" %>
+                <!--&nbsp;&nbsp;<%#= link_to 'Destroy', recommendation, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-xs btn-primary" %>-->
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>  
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>

@@ -1,0 +1,140 @@
+<div class="page-header">
+  <h3>Project - <%=@project.name%></h3>
+   <span style="float:right; margin-top:-30px;">
+
+     <span>Project Risks:</span>
+     <%= link_to_tasks(@project.open_risks.count,  @project.risks.count, project_tasks_url(@project.id)) %>
+     &nbsp;&nbsp;&nbsp;&nbsp;
+     <span>Architecture Recommendations:</span>
+     <%= link_to_tasks(@project.open_arch_recommendations.count,  @project.arch_recommendations.count, project_tasks_url(@project.id)) %>
+     &nbsp;&nbsp;&nbsp;&nbsp;
+     <span>Code Recommendations:</span>
+     <%= link_to_tasks(@project.open_code_recommendations.count,  @project.code_recommendations.count, project_tasks_url(@project.id)) %>
+   </span> 
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table project-details">
+      <tbody>
+        <tr>
+          <td colspan="2">
+            <b>Description:</b>
+            <%= simple_format(@project.description) %>
+          </td>
+        </tr>
+        <% unless @project.references.blank? %>
+        <tr>  
+          <td colspan="2">
+            <b>References:</b>
+            <%= simple_format(@project.references) %>
+          </td>
+        </tr>  
+        <% end %>
+        <tr>
+          <td class="w500">
+            <b>Status:</b>
+            <%= @project.status %>
+          </td>
+          <td>
+            <b>Technology Stack:</b>
+            <%= @project.technology_stack %>
+          </td>
+        </tr>  
+        <tr>
+          <td>
+            <b>Product Owner:</b>
+            <%= @project.product_owner %>
+          </td>
+          <td>
+            <b>Team:</b>
+            <%= @project.team %>
+          </td>
+        </tr>  
+      </tbody>
+    </table>
+  </div>    
+</div>
+<br/>
+<div class="box">
+  <div class="page-header">
+    <h4>Reviews</h4>
+    <span style="float:right; margin-top:-30px;"><b><%= link_to "+ New Review", new_project_review_url(@project.id),:class => "review-link" %></b></span>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <% if @reviews.blank? %>
+        <div>No record found!</div>
+      <% else %>
+        <table class="table table-striped datatable" id="projects">
+          <thead>
+            <tr>
+              <th>Reviewed On</th>
+              <th>Category</th>
+              <th>Summary</th>
+              <th>Risks</th>
+              <th>Recommendations</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @reviews.each do |review| %>
+              <tr class="project_<%= review.id %>">
+                <td><%= link_to review.reviewed_on.strftime("%d-%b-%Y"), review_url(review) %></td>
+                <td><%= review.category %></td>
+                <td>
+                  <% unless review.summary.blank? %>
+                    <%= review.summary.truncate(60) %>
+                  <% else %>
+                    <%= link_to "+ Summary", edit_review_url(review.id, exclude: :reviewed_on), :class => "btn btn-xs btn-primary review-link" %>
+                  <% end %>  
+                </td>
+                <td>
+                  <% unless review.code_review? %>
+                    <%= link_to_tasks(review.open_risks.count, review.risks.count, review_url(review.id)) %>&nbsp;&nbsp;
+                    <%= link_to '+ New', new_review_task_url(review, type: "Risk"), :class => "btn btn-xs btn-primary" %>
+                  <% else %>
+                    --
+                  <% end %>  
+                </td>
+                <td>
+                  <%= link_to_tasks(review.open_recommendations.count, review.recommendations.count, review_url(review.id)) %>&nbsp;&nbsp;
+                  <%= link_to '+ New'.html_safe, new_review_task_url(review, type: "Recommendation"), :class => "btn btn-xs btn-primary" %>
+                </td>
+                <td>
+                <%= link_to '&nbsp;Edit&nbsp;'.html_safe, edit_review_url(review), :class => "btn btn-xs btn-primary review-link" %>&nbsp;&nbsp;
+                <!--&nbsp;&nbsp;<%#= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-xs btn-primary" %>-->
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @reviews %>
+      <% end %>  
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+
+<div id="review_form_dialog" title="<%=@project.name%> - Review">
+  <div class="container"></div>
+</div>
+
+<script type="text/javascript">
+
+  $(function() {
+    $("#review_form_dialog").dialog({
+      autoOpen: false,
+      width: 600,
+      resizable: false,
+      modal: true,
+      open: function (event, ui) {
+        $('#review_form_dialog').css('overflow', 'hidden');
+      }
+    });
+ });
+
+</script>

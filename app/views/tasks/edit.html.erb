@@ -1,0 +1,7 @@
+<div class="page-header">
+  <h3><%=link_to "&laquo; #{@review.project.name} - #{@task.type}".html_safe, project_url(@review.project.id)%></h3>
+  <% if @review %>
+    <span style="float:right; margin-top:-30px;"><b>Reviewed On - <%= @review.reviewed_on %></b></span>
+  <% end %>
+</div>
+<%= render 'form' %>

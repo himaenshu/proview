@@ -1,0 +1,37 @@
+<div>
+  <% if review.errors.any? %>
+    <div id="error">
+      <ul>
+      <% review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_for(review, remote: true) do |f| %>
+    <%= f.hidden_field :project_id %>
+    <% unless exclude_attr?("reviewed_on") %>
+      <div class="field">
+        <label>Category</label>
+        <%= f.select :category, Review::CATEGORY.collect{|c| [c, c] } %>
+      </div>
+      <div class="field">
+        <label>Reviewed On</label>
+        <%= f.date_select :reviewed_on, order: [:day, :month, :year], required: true %>
+      </div>
+    <% end %>
+    <% unless review.new_record? %>
+      <div class="field">
+        <%= f.label :summary %>
+        <%= f.text_area :summary, rows: 10, :maxlength => 1000, style: "resize:none;", class: "w400" %>
+      </div>
+    <% end %>
+    </br>
+    <div class="actions">
+      <label>&nbsp;</label>
+      <%= f.submit "Save".html_safe, :class=> "btn btn-primary"%>
+    </div>
+  <% end %>
+  <br/>
+</div>
